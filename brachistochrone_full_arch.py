@@ -1,6 +1,6 @@
 # Numerical Solution to the problems in the Calculus of Variations
 
-# Version 2 (for a full curve)
+# Version 2 (for a full cycloid curve)
 
 import numpy as np
 from scipy import constants
@@ -8,7 +8,7 @@ from scipy.optimize import minimize
 import matplotlib.pyplot as plt
 
 # first create an array containing values on the x-axis
-N = 600      # number of points
+N = 350      # number of points
 N_half = N//2
 width = 5
 x_half = np.linspace(0, width/2, N_half)
@@ -72,21 +72,14 @@ plt.plot(x_rest, -y_rest, color='blue', linewidth=2.5)
 
 plt.plot(x_ideal, -y_ideal, label='Exact Cycloid Solution', color='red', linewidth=2)
 
-plt.axis('equal')
 plt.title(f"Brachistochrone: Numerical vs Exact Solution (N={N})")
 plt.xlabel("X axis")
 plt.ylabel("Y axis")
+plt.xlim(left=-0.1,right=5.1)
+plt.ylim(bottom=-2,top=0.5)
 plt.legend()
 plt.grid()
 plt.show()
 
 
 
-
-
-
-
-
-
-
-    

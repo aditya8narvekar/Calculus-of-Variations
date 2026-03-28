@@ -5,30 +5,32 @@ from scipy import constants
 from scipy.optimize import minimize
 import matplotlib.pyplot as plt
 
-# first create an array containing values on the x-axis
-N = 400      # number of points
+# create array containing values on the x-axis
+N = 200      # number of points
 x = np.linspace(0, 1, N)
 dx = x[1]-x[0]
 
 def func(y):
-    '''define your f(x,y,y') here'''
+    ''' define f(x,y,y') '''
     # First we form the array of dy/dx
-    dy_dx = np.diff(y) / dx
+    dy_dx = np.diff(y) / dx     # array of slope at each point
     
     # f(x,y,y') = (sqrt[1 + (y')^2] / sqrt[2gy])
-    return (np.sqrt(1 + (dy_dx)**2) / np.sqrt(2*constants.g* np.abs(y[:-1])))
+    return (np.sqrt(1 + (dy_dx)**2) / np.sqrt(2*constants.g * np.abs(y[:-1])))
                                             # np.abs() to prevent -ve sqrt 
 
 def time_taken(y):
-    '''we are gonna define our integral here'''
+    ''' define the integral: J[y] '''
     # First form the array of y
     y_full = np.concatenate(([1e-2], y, [1]))   # 1e-2 for ZeroDivisionError
+    
     # now we construct our array of f(x,y,y')
     f = func(y_full)
+    
     # finally we integrate this f over x
     return np.sum(f)*dx
 
-result = minimize(time_taken, np.ones(N-2))
+result = minimize(time_taken, np.linspace(0,1,N)[1:-1])
 
 y = np.concatenate(([0],result.x,[1]))
 print(result)
@@ -82,11 +84,3 @@ plt.show()
 
 
 
-
-
-
-
-
-
-
-    
